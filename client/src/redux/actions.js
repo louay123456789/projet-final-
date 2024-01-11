@@ -1,9 +1,10 @@
 import { ERRORS, GET_AUTH_USER, LOGIN_USER, LOGOUT_USER, REGISTER_USER } from "./actionTypes"
 import axios from "axios"
-export const registeUser=(formdata)=>async(dispatch)=>{
+export const registeUser=(formdata,navigate)=>async(dispatch)=>{
 try{
 const res=await axios.post("http://localhost:5001/api/auth/register",formdata)
 dispatch({type:REGISTER_USER,payload:res.data})
+navigate("/Dashboard")
 }
 catch(err){
     console.log(err)
@@ -13,18 +14,32 @@ const {errors,msg}=err.response.data
 /*if(Array.isArray(errors)){
     errors.forEach((err)=>alert(err.msg))
 }*/
-dispatch({type:ERRORS,payload:errors})
+dispatch({
+    type:ERRORS,
+    payload:errors
+})
 
 }
 
 }
-export const loginUser=(formdata)=>async(dispatch)=>{
+export const loginUser=(formdata,navigate)=>async(dispatch)=>{
     try{
     const res=await axios.post("http://localhost:5001/api/auth/login",formdata)
     dispatch({type:LOGIN_USER,payload:res.data})
+    navigate("/Dashboard")
     }
     catch(err){
         console.log(err)
+        console.dir (err)
+    const {errors,msg}=err.response.data
+    
+    /*if(Array.isArray(errors)){
+        errors.forEach((err)=>alert(err.msg))
+    }*/
+    dispatch({
+        type:ERRORS,
+        payload:errors
+    })
 
     }
     

@@ -9,24 +9,25 @@ function RegisterModal() {
   const[name,setName]=useState("")
   const[lastName,setLastName]=useState("")
   const[password,setPassword]=useState("")
-const [errors,setErrors]=useState(null)
-console.log(errors,"newwState")
+
   const toggle=()=>{
     setModal(!modal)
   }
   const dispatch=useDispatch()
   const navigate=useNavigate()
-  const user=useSelector((state)=>state.user)
-  const err=useSelector((state)=>state.err)
-  console.log(err,"hello")
-
+const isAuth=useSelector((state)=>state.isAuth)
+  const errors=useSelector((state)=>state.err)
+console.log(errors,"hellllo")
+console.log(isAuth,"kkkkkkkkk")
   const handleRegister=()=>{
      
     const formdata={name,email,password,lastName}
-    dispatch(registeUser(formdata))
-    setErrors(err)
-navigate("/Dashboard")
-setErrors("")
+    dispatch(registeUser(formdata,navigate))
+
+ if (isAuth ===true){
+toggle()
+ }
+
   }
 
   
@@ -54,17 +55,17 @@ register      </Button>
   <InputGroup>
     <Input placeholder="password" onChange={(event)=>setPassword(event.target.value)}/>
   </InputGroup>
-<InputGroup>
+  <InputGroup>
 
 
 {errors && (
                 <Alert color="danger">
-                  {errors.map((err, index) => (
-                    <div key={index}>{err.msg}</div>
+                  {errors.map((err) => (
+                    <div >{err.msg}</div>
                   ))}
                 </Alert>
               )}
-</InputGroup>
+</InputGroup> 
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={handleRegister}>

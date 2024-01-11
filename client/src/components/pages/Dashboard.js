@@ -7,6 +7,7 @@ function Dashboard() {
 
   return (
     <div>
+      <h1>My SPACE</h1>
       <h1>{user && user.name} { user && user.lastName}</h1>
       <h3>{user && user.email}</h3>
     </div>

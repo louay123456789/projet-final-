@@ -4,7 +4,7 @@ import AppNavBar from './components/pages/AppNavBar';
 import { Routes,Route } from 'react-router-dom';
 import Dashboard from './components/pages/Dashboard';
 import Home from './components/pages/Home';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { getAuthUser } from './redux/actions';
 function App() {
   const dispatch=useDispatch()
@@ -12,13 +12,21 @@ function App() {
   dispatch(getAuthUser())
   }
   useEffect(getAuth,[])
+  const isAuth=useSelector((state)=>state.isAuth)
   return (
     <div className="App">
     <AppNavBar />
-<Routes>
+    {isAuth &&
+    <Routes>
+      <Route path="/Dashboard" element={<Dashboard/>} />
+      </Routes>
+        }
+      <Routes>
   <Route path="/" element={<Home/>} />
-  <Route path="/Dashboard" element={<Dashboard/>} />
+  
 </Routes>
+  
+
 
     </div>
   );

@@ -3,7 +3,8 @@ const { REGISTER_USER, GET_AUTH_USER, LOGOUT_USER, LOGIN_USER, ERRORS } = requir
 const initState={
    token:localStorage.getItem("token"), 
     user:null,
-    isAuth:false
+    isAuth:false,
+    err:null
 }
 
 export const authReducer=(state=initState,action)=>{
@@ -22,7 +23,7 @@ export const authReducer=(state=initState,action)=>{
         return{
             ...state,
             user:action.payload.user,
-            isAuth:true
+          
         }
     case LOGOUT_USER :
         localStorage.removeItem("token");
@@ -31,14 +32,14 @@ export const authReducer=(state=initState,action)=>{
             isAuth:false,
             user:null
         }
-        case ERRORS:{
+        case ERRORS:
             return{
                 ...state,
+                err:action.payload,
                 isAuth:false,
-                user:null,
-                err:action.payload
+                user:null
             }
-        }
+       
         default:
        return state
     }

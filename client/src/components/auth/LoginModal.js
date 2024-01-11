@@ -1,7 +1,7 @@
 import React ,{useState}from 'react'
-import {Modal,ModalBody,ModalHeader,ModalFooter,Button,InputGroup,InputGroupText,Input} from "reactstrap"
+import {Alert,Modal,ModalBody,ModalHeader,ModalFooter,Button,InputGroup,InputGroupText,Input} from "reactstrap"
 import { loginUser, registeUser } from '../../redux/actions'
-import {useDispatch} from "react-redux"
+import {useDispatch,useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
 function LoginModal() {
   const[modal,setModal]=useState(false)
@@ -10,13 +10,14 @@ function LoginModal() {
   const toggle=()=>{
     setModal(!modal)
   }
+  const errors=useSelector((state)=>state.err)
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const handleLogin=()=>{
     const formdata={email,password}
-    dispatch(loginUser(formdata))
-navigate("/Dashboard")
-toggle()
+    dispatch(loginUser(formdata,navigate))
+
+
   }
   return (
     <div>
@@ -34,7 +35,17 @@ Login      </Button>
   <InputGroup>
     <Input placeholder="password" onChange={(event)=>setPassword(event.target.value)}/>
   </InputGroup>
+  <InputGroup>
 
+
+{errors && (
+                <Alert color="danger">
+                  {errors.map((err) => (
+                    <div >{err.msg}</div>
+                  ))}
+                </Alert>
+              )}
+</InputGroup> 
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={handleLogin}>
