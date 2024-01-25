@@ -3,6 +3,9 @@ import {Alert,Modal,ModalBody,ModalHeader,ModalFooter,Button,InputGroup,InputGro
 import { registeUser } from '../../redux/actions'
 import {useDispatch, useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom'
+import './styles.css';
+
+
 function RegisterModal() {
   const[modal,setModal]=useState(false)
   const[email,setEmail]=useState("")
@@ -33,8 +36,8 @@ toggle()
   
 
   return (
-    <div>
-         <Button color="danger" onClick={toggle}>
+    <div className='RegisterModal'>
+         <Button className='btn1'  onClick={toggle}>
 register      </Button>
       <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Register</ModalHeader>
@@ -59,7 +62,7 @@ register      </Button>
 
 
 {errors && (
-                <Alert color="danger">
+                <Alert >
                   {errors.map((err) => (
                     <div >{err.msg}</div>
                   ))}
@@ -68,10 +71,10 @@ register      </Button>
 </InputGroup> 
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleRegister}>
+          <Button onClick={handleRegister}>
             register
           </Button>{' '}
-          <Button color="secondary" onClick={toggle}>
+          <Button onClick={toggle}>
             Cancel
           </Button>
         </ModalFooter>

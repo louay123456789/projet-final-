@@ -6,6 +6,14 @@ import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import { logoutUser } from '../../redux/actions'
 import { useNavigate } from 'react-router-dom'
+import './Style.css';
+import logo from './image/logo.png'
+const projects = [
+  {
+    imageUrl: logo ,
+  },
+];
+
 function AppNavBar() {
     const [isOpen,setIsOpen]=useState(false)
     const toggle=()=>{
@@ -14,7 +22,7 @@ function AppNavBar() {
     }
 
 
-    const user=useSelector((state)=>state.user)
+    const user=useSelector((state)=>state.auth.user)
 console.log(user)
 const dispatch=useDispatch()
 const navigate=useNavigate()
@@ -35,30 +43,57 @@ const handleLogout=()=>{
       );
 
       const authLinks = (
-        <Fragment>
-          <NavItem>
-            <Link to="/Dashboard">
-              <span className="navbar-text mr-3">
-              <strong>{user && `Welcome ${user.name} `}</strong>
-              </span>
-            </Link>
-          </NavItem>
-          <NavItem>
-          <NavLink href="#" onClick={handleLogout} >
-     
-          <strong className="navbar-text mr-3"> Logout</strong> 
-       
-          </NavLink>
-          </NavItem>
-          <NavItem>
+        <Fragment>          
+          <NavItem >
          
-              <span className="navbar-text mr-3">
-              <Link to="/">
+              <span className="navbarlou4">
+              <Link to="/Home">
               <strong>Home</strong>
               </Link>
               </span>
             
           </NavItem>
+          
+          <NavItem >
+         
+         <span className="navbarlou3">
+         <Link to="/Projet">
+          
+         <strong>project</strong>
+         </Link>
+         </span>
+       
+     </NavItem>
+     <h2>
+        {projects.map((props) => (
+            <img src={props.imageUrl}/>
+        ))}</h2>
+     <NavItem >
+         
+         <span className="navbarlou2">
+         <Link to="/Moi">
+         <strong>Info</strong>
+         </Link>
+         </span>
+       
+     </NavItem>
+     
+     <NavItem >
+         <NavLink>
+         <span className="navbarlou1">
+         <Link to="/Contact">
+         <strong>réservation</strong>
+         </Link>
+         </span>
+         </NavLink>
+     </NavItem>
+     <NavLink href="#" onClick={handleLogout} >
+     
+     <strong className="LOGOWTNAV"> Logout</strong> 
+  
+     </NavLink>
+     
+     
         </Fragment>
       );
   return (
@@ -70,12 +105,15 @@ const handleLogout=()=>{
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
           {user && user ? authLinks: guestLinks}
+          
           </Nav>
         </Collapse>
       </Container>
     </Navbar>
+    
   </div>
   )
 }
+
 
 export default AppNavBar

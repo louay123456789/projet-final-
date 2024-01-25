@@ -2,7 +2,14 @@ import React ,{useState}from 'react'
 import {Alert,Modal,ModalBody,ModalHeader,ModalFooter,Button,InputGroup,InputGroupText,Input} from "reactstrap"
 import { loginUser, registeUser } from '../../redux/actions'
 import {useDispatch,useSelector} from "react-redux"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom' 
+import logo from './img/logo2.png'
+import './styles.css';
+const projects = [
+  {
+    imageUr2: logo ,
+  },
+];
 function LoginModal() {
   const[modal,setModal]=useState(false)
   const[email,setEmail]=useState("")
@@ -20,8 +27,8 @@ function LoginModal() {
 
   }
   return (
-    <div>
-         <Button color="danger" onClick={toggle}>
+    <div className='LoginModal'>
+         <Button className='btn2' onClick={toggle}>
 Login      </Button>
       <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Login</ModalHeader>
@@ -29,8 +36,7 @@ Login      </Button>
   <InputGroup>
     <Input placeholder="email" onChange={(event)=>setEmail(event.target.value)} />
     <InputGroupText>
-      @example.com
-    </InputGroupText>
+      @example.com     </InputGroupText>
   </InputGroup>
   <InputGroup>
     <Input placeholder="password" onChange={(event)=>setPassword(event.target.value)}/>
@@ -39,18 +45,23 @@ Login      </Button>
 
 
 {errors && (
-                <Alert color="danger">
+                <Alert >
                   {errors.map((err) => (
                     <div >{err.msg}</div>
                   ))}
+
                 </Alert>
               )}
+              <h2>
+        {projects.map((props) => (
+            <img src={props.imageUr2}/>
+        ))}</h2>
 </InputGroup> 
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleLogin}>
+          <Button  onClick={handleLogin}>
 Login          </Button>{' '}
-          <Button color="secondary" onClick={toggle}>
+          <Button  onClick={toggle}>
             Cancel
           </Button>
         </ModalFooter>
